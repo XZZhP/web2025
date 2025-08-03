@@ -1,0 +1,24 @@
+# 通用忽略
+.DS_Store
+*.log
+*.tmp
+.idea
+.vscode
+
+# 前端忽略（React/Vue等）
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.cache
+
+# 后端忽略（Midway.js/Node.js）
+backend/node_modules/
+backend/logs/
+backend/run/
+backend/.env
+backend/.serverless/
+
+# 其他构建产物
+**/*.zip
+**/*.tar.gz
