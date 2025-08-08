@@ -1,5 +1,6 @@
 import { Configuration, App } from '@midwayjs/core';
 import * as koa from '@midwayjs/koa';
+import * as upload from '@midwayjs/upload';
 import * as validate from '@midwayjs/validate';
 import * as info from '@midwayjs/info';
 import { join } from 'path';
@@ -12,6 +13,7 @@ import * as typeorm from '@midwayjs/typeorm';
 @Configuration({
   imports: [
     koa,
+    upload,
     validate,
     {
       component: info,

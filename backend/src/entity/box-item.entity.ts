@@ -10,11 +10,7 @@ export class BoxItem {
   @Column()
   name: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['common', 'uncommon', 'rare', 'epic', 'legendary'],
-    default: 'common'
-  })
+  @Column('varchar')
   rarity: string;
 
   @Column()

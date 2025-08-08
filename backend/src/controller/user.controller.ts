@@ -1,4 +1,4 @@
-import { Controller, Inject, Post, Body } from '@midwayjs/core';
+import { Controller, Inject, Post, Get, Put, Body, Param } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { UserService } from '../service/user.service';
 
@@ -14,8 +14,9 @@ export class UserController {
   @Post('/register')
   async register(@Body() registerData: {
     username: string;
-    email: string;  
+    email: string;
     password: string;
+    role: string;
   }) {
     const user = await this.userService.register(registerData);
     if (!user) {
@@ -33,8 +34,47 @@ export class UserController {
     if (!user) {
       return { success: false, message: 'Login failed', data: null };
     }
-    return { success: true, message: 'OK', data: null };
+    this.ctx.session.userId = user.id;
+    return { success: true, message: 'OK', data: { username: user.username, role: user.role } };
   }
 
-  
+  // 获取用户信息
+  @Get('/profile/:username')
+  async getProfile(@Param('username') username: string) {
+    const user = await this.userService.getUserByUsername(username);
+
+    if (!user) {
+      return { success: false, message: '用户不存在' };
+    }
+
+    // 返回脱敏后的用户信息
+    return {
+      success: true,
+      data: {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        // 其他不敏感信息
+      }
+    };
+  }
+
+  // 修改密码
+  @Put('/password')
+  async changePassword(@Body() body: { username: string; currentPassword: string; newPassword: string }) {
+    const { currentPassword, newPassword } = body;
+    const user = await this.userService.getUserByUsername(body.username);
+
+    const result = await this.userService.changePassword(
+      user.id,
+      currentPassword,
+      newPassword
+    );
+
+    if (!result.success) {
+      this.ctx.status = 400;
+    }
+
+    return result;
+  }
 }

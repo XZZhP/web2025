@@ -13,7 +13,7 @@ export class Box {
   @Column('text')
   description: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('int')
   price: number;
 
   @Column()

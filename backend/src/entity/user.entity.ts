@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class User {
@@ -13,4 +13,11 @@ export class User {
 
     @Column()
     password: string;
+
+    @Column({
+        type: 'varchar',
+        default: 'user', // 添加默认值
+        nullable: false
+    })
+    role: string;
 }

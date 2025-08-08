@@ -14,6 +14,6 @@ export class UserItem {
   @ManyToOne(() => BoxItem)
   item: BoxItem;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   obtainedAt: Date;
 }
