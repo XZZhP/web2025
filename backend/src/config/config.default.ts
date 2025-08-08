@@ -32,8 +32,7 @@ export default {
   },
   aliyunOSS: {
     endpoint: 'https://oss-cn-shanghai.aliyuncs.com',
-    accessKeyId: process.env.ALIYUN_OSS_ACCESS_KEY_ID,
-    accessKeySecret: process.env.ALIYUN_OSS_ACCESS_KEY_SECRET,
+    
     bucketName: 'szrg2',
   },
 
