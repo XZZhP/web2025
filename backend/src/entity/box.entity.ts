@@ -20,7 +20,7 @@ export class Box {
   stock: number;
 
   @Column()
-  coverImage: string; // OSS URL或本地路径
+  coverImage: string; // OSS URL字符串
 
   @OneToMany(() => BoxItem, item => item.box, { cascade: true })
   items: BoxItem[];

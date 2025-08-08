@@ -11,6 +11,8 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register";
 import CreateBoxPage from "./pages/CreateBox.jsx";
 import Upload from "./components/upload.jsx";
+import BoxDetailPage from "./pages/BoxDetailPage.jsx";
+import WishlistPage from "./pages/WishlistPage.jsx";
 
 function App() {
   //const [count, setCount] = useState(  0)
@@ -29,6 +31,8 @@ function App() {
 
           {/* 路由配置 */}
           <Routes>
+              <Route path="/wishlist" element={<WishlistPage/>} />
+              <Route path="/boxes/:id" element={<BoxDetailPage />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/create-box" element={<CreateBoxPage />} />
               <Route path="/boxes" element={<BoxListPage />} />

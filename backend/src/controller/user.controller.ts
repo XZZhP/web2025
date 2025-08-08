@@ -35,7 +35,7 @@ export class UserController {
       return { success: false, message: 'Login failed', data: null };
     }
     this.ctx.session.userId = user.id;
-    return { success: true, message: 'OK', data: { username: user.username, role: user.role } };
+    return { success: true, message: 'OK', data: { userId: user.id, username: user.username, role: user.role } };
   }
 
   // 获取用户信息

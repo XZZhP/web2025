@@ -29,6 +29,10 @@ export const getBoxes = async () => {
     return axios.get('/api/box');
 };
 
-export const getBox = async (id) => {
+export const getBoxDetails = async (id) => {
     return axios.get(`/api/box/${id}`);
 }
+
+export const purchaseBox = (data) => {
+    return axios.post('/api/box/purchase', data);
+};

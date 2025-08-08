@@ -65,7 +65,7 @@ const BoxListPage = () => {
     return (
         <div className="flex flex-col h-screen mt-10 min-w-screen">
             {/* 固定头部区域 */}
-            <div className=" sticky top-0 z-10 border-b">
+            <div className=" sticky top-10 z-10 border-b">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <h1 className="text-3xl font-bold">盲盒列表</h1>
@@ -92,7 +92,7 @@ const BoxListPage = () => {
             </div>
 
             {/* 可滚动的内容区域 */}
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 mt-10 overflow-auto">
                 <div className="container mx-auto px-4 py-6">
                     {filteredBoxes.length === 0 ? (
                         <div className="text-center py-12">

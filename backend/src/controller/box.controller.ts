@@ -1,5 +1,5 @@
 // src/controller/box.controller.ts
-import { Controller, Inject, Post, Get, Body } from '@midwayjs/core';
+import { Controller, Inject, Post, Get, Body, Param } from '@midwayjs/core';
 import { BoxService } from '../service/box.service';
 import { Context } from '@midwayjs/koa';
 
@@ -74,6 +74,30 @@ export class BoxController {
             return {
                 success: false,
                 message: '获取盲盒列表失败'
+            };
+        }
+    }
+
+    @Get('/:id')
+    async getBoxDetail(@Param('id') id: number) {
+        try {
+            const box = await this.boxService.getBoxDetail(id);
+            if (!box) {
+                this.ctx.status = 404;
+                return {
+                    success: false,
+                    message: '盲盒不存在'
+                };
+            }
+            return {
+                success: true,
+                data: box
+            };
+        } catch (err) {
+            this.ctx.status = 500;
+            return {
+                success: false,
+                message: err.message || '获取盲盒详情失败'
             };
         }
     }

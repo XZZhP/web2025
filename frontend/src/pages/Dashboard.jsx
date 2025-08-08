@@ -214,7 +214,7 @@ export default function Dashboard() {
 
                         {/* 其他功能按钮 - 预留扩展 */}
                         <button className="text-white px-4 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
-                            我的收藏
+                            <Link to="/wishlist">我的心愿单</Link>
                         </button>
 
                         {/*<button className="px-4 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition">*/}

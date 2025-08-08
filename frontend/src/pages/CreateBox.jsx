@@ -150,9 +150,9 @@ const CreateBoxPage = () => {
 
 
     return (
-        <div className="flex mt-6 px-6 py-8 text-black min-h-screen min-w-screen bg-blue-100">
+        <div className="flex items-center justify-center mt-6 px-6 py-8 text-black min-h-screen min-w-screen bg-blue-100">
 
-            <form onSubmit={handleSubmit} className="space-y-6 w-1/2 ml-10">
+            <form onSubmit={handleSubmit} className="space-y-6 w-1/2">
                 {/* 盲盒基本信息 */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold mb-4">盲盒信息</h2>

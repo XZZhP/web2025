@@ -81,6 +81,17 @@ export class BoxService {
         });
     }
 
+    //盲盒详情
+    async getBoxDetail(id: number) {
+        // 方法1: 使用Repository查询
+        const box = await this.boxModel.findOne({
+            where: { id },
+            relations: ['items'] // 加载关联的items
+        });
+
+        return box;
+    }
+
     // 购买盲盒
     async purchaseBox(userId: number, boxId: number) {
         const box = await this.boxModel.findOne({

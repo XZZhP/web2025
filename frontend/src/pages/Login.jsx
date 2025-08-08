@@ -39,6 +39,7 @@ export default function Login() {
             if(response.status === 200){
                 sessionStorage.setItem('isAuthenticated', 'true');
                 sessionStorage.setItem('username', response.data.data.username);
+                sessionStorage.setItem('userId', response.data.data.userId);
                 navigate('/dashboard')
             }else{
                 setError("登录失败")
