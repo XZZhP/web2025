@@ -12,3 +12,4 @@ run/
 .tsbuildinfo
 .tsbuildinfo.*
 src/config/config.local.ts
+.env
