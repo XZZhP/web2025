@@ -28,23 +28,44 @@ export default function Login() {
         }
 
         try{
-            const response =await request.post("api/user/login",{
-                username: formData.username,
-                password: formData.password,
+            console.log("输入的密码！",formData.password)
+            const response =await request.post("api/user/login",{ username:formData.username, password:formData.password }
+                ,{
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // 允许携带 Cookie
             })
 
-            console.log('登录返回信息！',response.status)
+            console.log('登录返回信息！',response.data)
             if(response.status === 200){
+                sessionStorage.setItem('isAuthenticated', 'true');
+                sessionStorage.setItem('username', response.data.data.username);
                 navigate('/dashboard')
             }else{
                 setError("登录失败")
             }
 
         } catch(err){
-
+            setError("登录失败")
+            sessionStorage.removeItem('auth');
         }
 
 
+    }
+    if (sessionStorage.getItem("isAuthenticated")) {
+        return (
+            <div className="min-h-screen min-w-screen bg-blue-100 flex items-center justify-center">
+                <div className="text-center p-8 bg-white rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold text-black mb-4">您已经登录!</h2>
+                    <p className="mb-6 text-black">请退出登录后访问此页面</p>
+                    <Link
+                        to="/dashboard"
+                        className="px-4 py-2 bg-blue-200 text-black rounded hover:bg-blue-300"
+                    >
+                        前往个人中心
+                    </Link>
+                </div>
+            </div>
+        );
     }
     return (
         <div className="min-w-screen min-h-screen flex bg-blue-100 items-center justify-center">

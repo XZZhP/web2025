@@ -6,6 +6,7 @@ export default function Register() {
         username: "",
         email: "",
         password: "",
+        role:"",
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Register() {
         setError("");
 
         // 简单验证
-        if (!formData.username || !formData.email || !formData.password) {
+        if (!formData.username || !formData.email || !formData.password || !formData.role) {
             setError("请填写所有字段");
             return;
         }
@@ -33,11 +34,15 @@ export default function Register() {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,
+                role: formData.role,
             });
-            // 模拟注册请求（实际开发替换为 fetch/axios）
-            console.log("注册数据:", response);
-            alert("注册成功！");
-            navigate("/login"); // 跳转到登录页
+
+            console.log("注册数据:", response.data);
+            if(response.status === 200){
+                alert("注册成功！");
+                navigate("/login"); // 跳转到登录页
+            }
+
         } catch (err) {
             setError("注册失败，请重试");
         }
@@ -69,6 +74,24 @@ export default function Register() {
                             placeholder="请输入用户名"
 
                         />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 mb-2" htmlFor="role">
+                            身份
+                        </label>
+                        <select
+
+                            id="role"
+                            name="role"
+                            value={formData.role}
+                            onChange={handleChange}
+
+                            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                        >
+                            <option value="user">用户</option>
+                            <option value="admin">管理员</option>
+                        </select>
                     </div>
 
                     <div className="mb-4">
