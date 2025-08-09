@@ -1,5 +1,5 @@
 // src/controller/box.controller.ts
-import { Controller, Inject, Post, Get, Body, Param } from '@midwayjs/core';
+import { Controller, Inject, Post, Get, Body, Param, Del } from '@midwayjs/core';
 import { BoxService } from '../service/box.service';
 import { Context } from '@midwayjs/koa';
 
@@ -105,5 +105,20 @@ export class BoxController {
     @Post('/purchase')
     async purchaseBox(@Body() body: { userId: number; boxId: number }) {
         return this.boxService.purchaseBox(body.userId, body.boxId);
+    }
+
+
+    @Del('/:id')
+    async deleteBox(
+        @Param('id') id: number,
+    ) {
+        // 可以添加权限验证，例如：
+        // const userRole = this.ctx.user.role;
+        // if (userRole !== 'admin') {
+        //     throw new Error('无权执行此操作');
+        // }
+
+        await this.boxService.deleteBox(id);
+        return { success: true, message: '盲盒删除成功' };
     }
 }

@@ -36,3 +36,8 @@ export const getBoxDetails = async (id) => {
 export const purchaseBox = (data) => {
     return axios.post('/api/box/purchase', data);
 };
+
+export const deleteBox = async (boxId) => {
+    return axios.delete(`/api/box/${boxId}`);
+
+};

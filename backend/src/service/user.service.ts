@@ -3,12 +3,17 @@ import { InjectEntityModel } from '@midwayjs/typeorm';
 import { User } from '../entity/user.entity'
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { UserItem } from '../entity/user-item.entity';
 
 @Provide()
 export class UserService {
 
   @InjectEntityModel(User)
   userModel: Repository<User>
+
+  @InjectEntityModel(UserItem)
+  userItemModel: Repository<UserItem>
+
   async getUserByUsername(username: string) {
     const user = await this.userModel.findOne({ where: { username } });
     if (!user) {
@@ -17,7 +22,7 @@ export class UserService {
     return user;
   }
 
-  public async register(registerData: { username: string; email: string; password: string;role:string }) {
+  public async register(registerData: { username: string; email: string; password: string; role: string }) {
     const existingUser = await this.userModel.findOne({ where: { username: registerData.username } });
     if (existingUser) {
       throw new Error('User already exists');
@@ -28,7 +33,7 @@ export class UserService {
   }
 
   public async login(loginData: { username: string; password: string }) {
-    const user = await this.userModel.findOne({ where: { username: loginData.username }, select: ['id', 'username', 'password'] });
+    const user = await this.userModel.findOne({ where: { username: loginData.username }, select: ['id', 'username', 'password', 'role'] });
     console.log('存储的哈希:', user.password);
     console.log('输入的密码:', loginData.password);
     if (user && await bcrypt.compare(loginData.password, user.password)) {
@@ -63,5 +68,12 @@ export class UserService {
     await this.userModel.save(user);
 
     return { success: true, message: '密码修改成功' };
+  }
+
+  async getUserItems(userId: number) {
+    return this.userItemModel.find({
+      where: { user: { id: userId } },
+      relations: ['item', 'item.box'], // 加载关联的item和box数据
+    });
   }
 }

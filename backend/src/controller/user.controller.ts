@@ -35,6 +35,7 @@ export class UserController {
       return { success: false, message: 'Login failed', data: null };
     }
     this.ctx.session.userId = user.id;
+    console.log('登录成功用户ID:', user.role);
     return { success: true, message: 'OK', data: { userId: user.id, username: user.username, role: user.role } };
   }
 
@@ -76,5 +77,10 @@ export class UserController {
     }
 
     return result;
+  }
+
+  @Get('/items/:userId')
+  async getUserItems(@Param('userId') userId: number) {
+    return this.userService.getUserItems(userId);
   }
 }

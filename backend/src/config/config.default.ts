@@ -6,6 +6,7 @@ import { Box } from "../entity/box.entity";
 import { BoxItem } from '../entity/box-item.entity';
 import { UserItem } from '../entity/user-item.entity';
 import { Wishlist } from '../entity/wishlist.entity';
+import { Showcase } from '../entity/showcase.entity';
 
 export default {
   keys: '1752296300733_6960',
@@ -25,14 +26,15 @@ export default {
         database: path.join(__dirname, 'webapp.sqlite'), // 推荐放到项目根目录
         synchronize: true,
         logging: true,
-        entities: [User, Box, BoxItem, UserItem, Wishlist],
+        entities: [User, Box, BoxItem, UserItem, Wishlist, Showcase],
 
       }
     }
   },
   aliyunOSS: {
     endpoint: 'https://oss-cn-shanghai.aliyuncs.com',
-    
+    accessKeyId: 'LTAI5t6mimUXbWtPwmnd2s2d',
+    accessKeySecret: 'yrhZEv0o5gBAhsdMD2OVqh92s7ywEA',
     bucketName: 'szrg2',
   },
 

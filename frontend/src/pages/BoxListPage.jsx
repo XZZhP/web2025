@@ -1,6 +1,6 @@
 // src/pages/BoxListPage.jsx
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { getBoxes } from '../api/box';
 import BoxCard from '../components/BoxCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -12,6 +12,7 @@ const BoxListPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const role = sessionStorage.getItem('role');
 
     useEffect(() => {
         const fetchBoxes = async () => {
@@ -48,7 +49,7 @@ const BoxListPage = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center h-screen w-screen">
                 <LoadingSpinner />
             </div>
         );
@@ -56,7 +57,7 @@ const BoxListPage = () => {
 
     if (error) {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center h-screen w-screen">
                 <div className="text-red-500">{error}</div>
             </div>
         );
@@ -69,6 +70,12 @@ const BoxListPage = () => {
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <h1 className="text-3xl font-bold">盲盒列表</h1>
+
+                        {role === 'admin' && (
+                            <button>
+                                <Link to="/create-box">新建盲盒</Link>
+                            </button>
+                        )}
 
                         {/* 搜索框 */}
                         <div className="w-full md:w-64">

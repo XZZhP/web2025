@@ -1,7 +1,7 @@
 // src/pages/BoxDetailPage.jsx
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getBoxDetails, purchaseBox } from '../api/box';
+import {deleteBox, getBoxDetails, purchaseBox} from '../api/box';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Modal from '../components/Modal';
 import { addToWishlist, removeFromWishlist, getWishlist } from '../api/wishlist';
@@ -18,7 +18,12 @@ const BoxDetailPage = () => {
 
     const userId = sessionStorage.getItem('userId');
     const user = sessionStorage.getItem('isAuthenticated');
+    const role = sessionStorage.getItem('role');
+    console.log(role);
     const [inWishlist, setInWishlist] = useState(false);
+
+    const [deleting, setDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState(null);
 
     // 检查是否已在心愿单
     useEffect(() => {
@@ -95,6 +100,32 @@ const BoxDetailPage = () => {
             alert(err.response?.data?.message || err.message || '购买失败');
         } finally {
             setPurchasing(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!user) {
+            alert('请先登录');
+            return;
+        }
+
+        if (!window.confirm('确定要删除这个盲盒吗？此操作不可撤销！')) {
+            return;
+        }
+
+        setDeleting(true);
+        setDeleteError(null);
+
+        try {
+            const response = await deleteBox(box.id);
+            console.log("after deleting", response);
+            alert('盲盒删除成功');
+            navigate('/boxes'); // 删除成功后跳转到首页或其他页面
+        } catch (err) {
+            setDeleteError(err.response?.data?.message || err.message || '删除失败');
+            console.error('删除盲盒失败:', err);
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -227,6 +258,35 @@ const BoxDetailPage = () => {
                             >
                                 {inWishlist ? '❤️ 已收藏' : '♡ 加入心愿单'}
                             </button>
+
+                            {user && role === 'admin' && (
+                                <button
+                                    onClick={handleDelete}
+                                    disabled={deleting}
+                                    className={`px-6 py-2 rounded-lg font-medium ${
+                                        deleting
+                                            ? 'bg-gray-400 cursor-not-allowed'
+                                            : 'bg-red-600 hover:bg-red-700 text-white'
+                                    }`}
+                                >
+                                    {deleting ? (
+                                        <span className="flex items-center justify-center">
+          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          删除中...
+        </span>
+                                    ) : (
+                                        '删除盲盒'
+                                    )}
+                                </button>
+                            )}
+
+                            {/* 显示删除错误信息 */}
+                            {deleteError && (
+                                <div className="text-red-500 text-sm mt-2">{deleteError}</div>
+                            )}
                         </div>
                     </div>
                 </div>

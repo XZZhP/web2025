@@ -136,6 +136,10 @@ export default function Dashboard() {
                             <p className="font-medium">{userData.username}</p>
                         </div>
                         <div>
+                            <p className="text-gray-600">身份</p>
+                            <p className="font-medium">{userData.role}</p>
+                        </div>
+                        <div>
                             <p className="text-gray-600">电子邮箱</p>
                             <p className="font-medium">{userData.email}</p>
                         </div>
@@ -207,9 +211,9 @@ export default function Dashboard() {
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-semibold mb-4">功能</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {/* 历史记录按钮 - 预留扩展 */}
+
                         <button className="text-white px-4 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
-                            我的足迹
+                            <Link to="/my-items">我的背包</Link>
                         </button>
 
                         {/* 其他功能按钮 - 预留扩展 */}

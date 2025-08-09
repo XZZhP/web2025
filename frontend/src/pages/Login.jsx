@@ -40,6 +40,7 @@ export default function Login() {
                 sessionStorage.setItem('isAuthenticated', 'true');
                 sessionStorage.setItem('username', response.data.data.username);
                 sessionStorage.setItem('userId', response.data.data.userId);
+                sessionStorage.setItem('role', response.data.data.role);
                 navigate('/dashboard')
             }else{
                 setError("登录失败")

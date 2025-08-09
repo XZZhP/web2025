@@ -154,4 +154,26 @@ export class BoxService {
         // 如果没有匹配到，返回最后一个物品（理论上不应该到这里）
         return items[items.length - 1];
     }
+
+    async deleteBox(boxId: number): Promise<void> {
+        await this.boxModel.manager.transaction(async (transactionalEntityManager) => {
+            // 1. 首先查询盲盒是否存在
+            const box = await transactionalEntityManager.findOne(Box, {
+                where: { id: boxId },
+                relations: ['items'] // 加载关联的items
+            });
+
+            if (!box) {
+                throw new Error('盲盒不存在');
+            }
+
+            // 2. 删除盲盒内的物品定义（BoxItem）
+            await transactionalEntityManager.remove(box.items);
+
+            // 3. 将盲盒标记为下架（软删除）
+            box.isActive = false;
+            await transactionalEntityManager.save(box);
+
+        });
+    }
 }
