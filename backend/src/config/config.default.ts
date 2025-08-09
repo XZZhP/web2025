@@ -33,8 +33,8 @@ export default {
   },
   aliyunOSS: {
     endpoint: 'https://oss-cn-shanghai.aliyuncs.com',
-    accessKeyId: 'LTAI5t6mimUXbWtPwmnd2s2d',
-    accessKeySecret: 'yrhZEv0o5gBAhsdMD2OVqh92s7ywEA',
+    accessKeyId: ,
+    accessKeySecret:,
     bucketName: 'szrg2',
   },
 
